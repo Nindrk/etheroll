@@ -1,0 +1,33 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: eroll
+    network: mainnet
+    source:
+      address: "0xf478c8Bc5448236d52067c96F8f4C8376E62Fa8f"
+      abi: eroll
+      startBlock: 10139700
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - LogBet
+        - LogResult
+        - LogRefund
+        - LogOwnerTransfer
+      abis:
+        - name: eroll
+          file: ./abis/eroll.json
+      eventHandlers:
+        - event: LogBet(indexed bytes32,indexed address,indexed uint256,uint256,uint256,uint256,uint256)
+          handler: handleLogBet
+        - event: LogResult(indexed uint256,indexed bytes32,indexed address,uint256,uint256,uint256,int256,bytes)
+          handler: handleLogResult
+        - event: LogRefund(indexed bytes32,indexed address,indexed uint256)
+          handler: handleLogRefund
+        - event: LogOwnerTransfer(indexed address,indexed uint256)
+          handler: handleLogOwnerTransfer
+      file: ./src/mapping.ts

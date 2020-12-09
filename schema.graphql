@@ -1,0 +1,39 @@
+type Bet @entity {
+  "Bet id"
+  id: ID!
+  "Player"
+  player: Player
+  "Number to win"
+  playernumber: BigInt
+  "Randoem Query ID"
+  randomqueryid: BigInt
+  "Betted eth"
+  betvalue: BigInt
+  "Eth to win"
+  profitvalue: BigInt
+  "Win+bet eth"
+  rewardvalue: BigInt
+  "Dice result"
+  diceresult: BigInt
+  "Proof of result"
+  proof:Bytes
+  "Whether the bet was won"
+  Won: Boolean
+}
+
+type Player @entity {
+  "Player address"
+  id: ID!
+  "Player bets"
+  bets: [Bet!] @derivedFrom(field: "player")
+}
+
+type Statistic @entity {
+  id: ID!
+  "Bets counter"
+  bets:BigInt
+  "Wons counter"
+  wons:BigInt
+  "Looses counter"
+  looses:BigInt
+}
